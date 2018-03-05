@@ -4,8 +4,13 @@ import { UIController } from './controllers/ui/manage.controller';
 import { RedirectMemDao } from './data/redirect.dao';
 
 @Module({
-  controllers: [RedirectController, UIController],
-  components: [RedirectMemDao],
+  controllers: [
+    RedirectController,
+    UIController
+  ],
+  components: [
+    RedirectMemDao
+  ],
 })
 
 export class ApplicationModule {}

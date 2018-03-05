@@ -1,4 +1,4 @@
-import { Get, Controller, Bind, Dependencies, Param } from '@nestjs/common';
+import { Get, Post, Controller, Bind, Dependencies, Param, Res, Body } from '@nestjs/common';
 import { RedirectMemDao } from '../../data/redirect.dao';
 
 @Controller('ui')
@@ -9,8 +9,17 @@ export class UIController {
   }
 
 	@Get('manage')
-	list() {
-    return this.redirectDao.findAll();
+  @Bind(Res())
+	list(res, obj) {
+    let model = (obj != null) ? obj : {}
+    model.list = this.redirectDao.findAll();
+    res.render('manager', model);
+  }
+
+  @Post('manage')
+  @Bind(Res(), Body())
+  handleCreate(res, body) {
+    this.list(res, { message: this.redirectDao.create(body.url, body.optionalId) });
   }
 
   //TODO: I know, I know.
